@@ -1,0 +1,64 @@
+/*
+PALETA DE CORES: Paleta Pastel Elegante
+
+- Cor Principal: Lavanda Claro (#d3a2f3)
+- Cor Secundária: Azul Claro (#72B8F2)
+- Cor de Destaque: Dourado Suave (#E6A96B)
+- Cor de Fundo: Branco Neve (#FFFFFF)
+- Cor de Texto: Cinza Escuro (#333333)
+
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box  ;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+}
+
+.header-home-page{
+    padding: 3vw 10vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.title-header{
+    font-size: 4vw;
+    color: #d3a2f3;
+    margin-bottom: 0.4vw;
+}
+
+.subtitle-header{
+    font-size: 1.5vw;
+    color: #333333;
+}
+
+.container-main-header{
+    margin-top: 5vw;
+}
+
+.box-plans {
+    padding: 0.3vw;
+    display: inline-flex; /* Ajusta a largura automaticamente */
+    gap: 1vw;
+    border: 0.15vw solid #72B8F2;
+    border-radius: 1vw;
+    align-items: center; /* Alinha os itens verticalmente */
+    white-space: nowrap; /* Evita quebra de linha */
+}
+
+.plans-1, .plans-2{
+    padding: 0.5vw 1vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+.plans-selected{
+    background-color: #c692e9;
+    color: white;
+    font-weight: 600;
+}
