@@ -1,7 +1,7 @@
 /*
 PALETA DE CORES: Paleta Pastel Elegante
 
-- Cor Principal: Lavanda Claro (#d3a2f3)
+- Cor Principal: Lavanda Claro (#f279ba)
 - Cor Secundária: Azul Claro (#72B8F2)
 - Cor de Destaque: Dourado Suave (#E6A96B)
 - Cor de Fundo: Branco Neve (#FFFFFF)
@@ -28,7 +28,7 @@ body {
 
 .title-header{
     font-size: 4vw;
-    color: #d3a2f3;
+    color: #f279ba;
     margin-bottom: 0.4vw;
 }
 
@@ -55,10 +55,11 @@ body {
     padding: 0.5vw 1vw;
     border-radius: 0.5vw;
     cursor: pointer;
+    color: #333333;
 }
 
 .plans-selected{
-    background-color: #c692e9;
-    color: white;
-    font-weight: 600;
+    background-color: #f279ba !important; 
+    color: white !important;
+    font-weight: 600 !important;
 }

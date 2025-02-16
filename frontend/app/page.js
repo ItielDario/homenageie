@@ -1,21 +1,36 @@
+'use client'
 
+import { useState } from "react";
 
 const HomePage = () => {
+  const [selectedPlan, setSelectedPlan] = useState(2);
+
   return (
     <header className="header-home-page">
       <section className="container-top-header">
         <h1 className="title-header">Celebre uma mulher incrível! 👑</h1>
 
-        <h2 className="subtitle-header">Crie uma homenagem emocionante e mostre o quanto ela é especial. </h2>
+        <h2 className="subtitle-header">Crie uma homenagem emocionante e mostre o quanto ela é especial.</h2>
         <h2 className="subtitle-header">Preencha o formulário e receba o QR Code para compartilhar.</h2>
       </section>
 
       <section className="container-main-header">
         <article className="box-plans">
-          <p className="plans-1 ">3 fotos - R$ 4,90</p>
-          <p className="plans-2 plans-selected">5 fotos, 1 mensagem e 1 música - R$ 9,90</p>
+          <p className={`plans-1 ${selectedPlan === 1 ? "plans-selected" : ""}`} onClick={() => setSelectedPlan(1)}>
+            3 fotos - R$ 4,90
+          </p>
+
+          <p className={`plans-2 ${selectedPlan === 2 ? "plans-selected" : ""}`} onClick={() => setSelectedPlan(2)}>
+            5 fotos, 1 mensagem e 1 música - R$ 9,90
+          </p>
         </article>
       </section>
+    </header>
+  );
+};
+
+export default HomePage;
+
 
       
       
@@ -64,10 +79,4 @@ const HomePage = () => {
       <div className="font-box">
         <h3>Josefin Sans</h3>
         <p style={{ fontFamily: 'Josefin Sans, sans-serif' }}>Exemplo de texto com a fonte Josefin Sans.</p>
-      </div>
-      */}
-    </header>
-  );
-};
-
-export default HomePage;
+      </*/}
