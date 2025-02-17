@@ -1,12 +1,35 @@
 'use client'
 
 import { useState } from "react";
+import { FaCamera } from "react-icons/fa"; 
 
 const HomePage = () => {
   const [selectedPlan, setSelectedPlan] = useState(2);
+  const [mensagem, setMensagem] = useState("");
+  const [files, setFiles] = useState([]);
+
+  const handleMensagemChange = (e) => {
+    const inputText = e.target.value;
+    if (inputText.length <= 200) {
+      setMensagem(inputText);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFiles = e.target.files;
+    if (selectedFiles.length <= (selectedPlan === 1 ? 3 : 5)) {
+      setFiles(Array.from(selectedFiles));
+    } else {
+      alert(`Você pode escolher até ${selectedPlan === 1 ? 3 : 5} fotos.`);
+    }
+  };
 
   return (
     <div className="page-container">
+      <figure className="img-logo">
+        <img src="image/logo-homenagem-rosa.png"></img>
+      </figure>
+
       <main className="header-home-page">
         <section className="container-top-header">
           <h1 className="title-header">Celebre uma mulher incrível! 👑</h1>
@@ -23,7 +46,7 @@ const HomePage = () => {
               </p>
 
               <p className={`plans-2 ${selectedPlan === 2 ? "plans-selected" : ""}`} onClick={() => setSelectedPlan(2)}>
-                5 fotos, 1 mensagem e 1 música - R$ 9,90
+                5 fotos, 1 mensagem e com música - R$ 9,90
               </p>
             </article>
 
@@ -33,21 +56,64 @@ const HomePage = () => {
                 <input type="text" id="nome" name="nome" placeholder="Digite o nome" required />
               </div>
 
-              <div className="form-group">
+              <section className="form-group">
+                <label htmlFor="foto">Fotos:</label>
+                <section className="custom-file-upload">
+                  <input
+                    type="file"
+                    id="foto"
+                    name="foto"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileChange}
+                  />
+                  <span className="file-placeholder">
+                    <FaCamera className="FaCamera" /> {/* Ícone de câmera fotográfica */}
+                    {`${selectedPlan === 1 ? "Escolha até 3 fotos" : "Escolha até 5 fotos"}`}
+                  </span>
+                </section>
+
+                <section className="selected-files">
+                  {files.length > 0 && (
+                    <div className="file-preview">
+                      {files.map((file, index) => (
+                        <img
+                          key={index}
+                          src={URL.createObjectURL(file)}
+                          alt={`Foto ${index + 1}`}
+                          className="file-icon"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </section>
+              </section>
+
+              <div className={`form-group ${selectedPlan === 2 ? "plan-2-selected" : "plan-1-selected"}`}>
                 <label htmlFor="mensagem">Mensagem Personalizada:</label>
-                <textarea id="mensagem" name="mensagem" rows="4" placeholder="Digite sua mensagem" required></textarea>
+
+                <div className="textarea-container">
+                  <textarea
+                    id="mensagem"
+                    name="mensagem"
+                    rows="4"
+                    placeholder="Digite sua mensagem"
+                    required
+                    value={mensagem}
+                    onChange={handleMensagemChange}
+                  />
+                  <span className="char-count">{mensagem.length}/200</span> {/* Contagem de caracteres */}
+                </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="foto">Escolha até 5 fotos:</label>
-                <input type="file" id="foto" name="foto" accept="image/*" required />
-              </div>
-
-              <div className="form-group">
+              <div className={`form-group ${selectedPlan === 2 ? "plan-2-selected" : "plan-1-selected"}`}>
                 <label htmlFor="musica">Escolha uma Música (opcional):</label>
                 <input type="file" id="musica" name="musica" accept="audio/*" />
               </div>
 
+              <aside className={`msg-plan-1 ${selectedPlan === 1 ? "plan-2-selected" : "plan-1-selected"}`}>
+                <h3>*Troque de plano e surpreenda ela com uma mensagem e uma música de sua escolha.</h3>
+              </aside>
   
               <button className="btn"> CRIAR HOMENAGEM
               </button>
@@ -57,10 +123,9 @@ const HomePage = () => {
 
           <aside className="tutorial-group">
             <figure className="video-result">
-              <p>Como vai ficar</p>
-              
+              <p>Exemplo de como vai ficar 👇</p>
+              <iframe></iframe>
             </figure>
-            <figure className="video-tutorial"></figure>
           </aside>
         </section>
       </main>
