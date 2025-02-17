@@ -54,10 +54,10 @@ const HomePage = () => {
               <div className="form-group">
                 <label htmlFor="nome">Nome da Homenageada:</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite o nome" required />
-              </div>
+              </div>  
 
               <section className="form-group">
-                <label htmlFor="foto">Fotos:</label>
+                <label htmlFor="foto">Selecione as fotos:</label>
                 <section className="custom-file-upload">
                   <input
                     type="file"
@@ -69,7 +69,7 @@ const HomePage = () => {
                   />
                   <span className="file-placeholder">
                     <FaCamera className="FaCamera" /> {/* Ícone de câmera fotográfica */}
-                    {`${selectedPlan === 1 ? "Escolha até 3 fotos" : "Escolha até 5 fotos"}`}
+                    {`${selectedPlan === 1 ? "Clique aqui e escolha até 3 fotos" : "Clique aqui e escolha até 5 fotos"}`}
                   </span>
                 </section>
 
@@ -112,7 +112,7 @@ const HomePage = () => {
               </div>
 
               <aside className={`msg-plan-1 ${selectedPlan === 1 ? "plan-2-selected" : "plan-1-selected"}`}>
-                <h3>*Troque de plano e surpreenda ela com uma mensagem e uma música de sua escolha.</h3>
+                <h3>*Personalize sua homenagem com uma mensagem carinhosa e uma música marcante. Mude de plano e torne o momento ainda mais especial.</h3>
               </aside>
   
               <button className="btn"> CRIAR HOMENAGEM
