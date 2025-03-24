@@ -1,12 +1,18 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaCamera } from "react-icons/fa"; 
 
 const HomePage = () => {
   const [selectedPlan, setSelectedPlan] = useState(2);
   const [mensagem, setMensagem] = useState("");
   const [files, setFiles] = useState([]);
+  let alertMsg = useRef("")
+
+  const planChange = (e) => {
+    setFiles(0);
+    alertMsg.current.innerHTML = '';
+  };
 
   const handleMensagemChange = (e) => {
     const inputText = e.target.value;
@@ -17,35 +23,37 @@ const HomePage = () => {
 
   const handleFileChange = (e) => {
     const selectedFiles = e.target.files;
+
     if (selectedFiles.length <= (selectedPlan === 1 ? 3 : 5)) {
+      alertMsg.current.innerHTML = '';
       setFiles(Array.from(selectedFiles));
-    } else {
-      alert(`Você pode escolher até ${selectedPlan === 1 ? 3 : 5} fotos.`);
+    } 
+    else {
+      setFiles(0);
+      alertMsg.current.innerHTML = `Você pode escolher até ${selectedPlan === 1 ? 3 : 5} fotos.`;
     }
   };
 
   return (
     <div className="page-container">
       <figure className="img-logo">
-        <img src="image/logo-homenagem-rosa.png"></img>
+        <img src="image/logo-homenagem-rosa-pascoa.png"></img>
       </figure>
 
       <main className="header-home-page">
         <section className="container-top-header">
-          <h1 className="title-header">Celebre uma mulher incrível! 👑</h1>
-
-          <h2 className="subtitle-header">Crie uma homenagem emocionante e mostre o quanto ela é especial.</h2>
-          <h2 className="subtitle-header">Preencha o formulário e receba o QR Code para compartilhar.</h2>
+          <h1 className="title-header">Transforme o amor da páscoa em uma homenagem inesquecível 🕊️</h1>
+          <h2 className="subtitle-header">Demonstre seu carinho com uma homenagem feita com amor!</h2>
         </section>
 
         <section className="container-main-header">
           <section className="form-container">
             <article className="box-plans">
-              <p className={`plans-1 ${selectedPlan === 1 ? "plans-selected" : ""}`} onClick={() => setSelectedPlan(1)}>
+              <p className={`plans-1 ${selectedPlan === 1 ? "plans-selected" : ""}`} onClick={() => { setSelectedPlan(1); planChange() }}>
                 3 fotos - R$ 4,90
               </p>
 
-              <p className={`plans-2 ${selectedPlan === 2 ? "plans-selected" : ""}`} onClick={() => setSelectedPlan(2)}>
+              <p className={`plans-2 ${selectedPlan === 2 ? "plans-selected" : ""}`} onClick={() => {setSelectedPlan(2); planChange()}}>
                 5 fotos, 1 mensagem e com música - R$ 9,90
               </p>
             </article>
@@ -53,7 +61,7 @@ const HomePage = () => {
             <form className="form">
               <div className="form-group">
                 <label htmlFor="nome">Nome da Homenageada:</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome" required />
+                <input type="text" id="nome" name="nome" placeholder="Digite o nome da homenageada" required />
               </div>  
 
               <section className="form-group">
@@ -73,6 +81,8 @@ const HomePage = () => {
                   </span>
                 </section>
 
+                <aside className="alert-msg" ref={alertMsg}></aside>
+                
                 <section className="selected-files">
                   {files.length > 0 && (
                     <div className="file-preview">

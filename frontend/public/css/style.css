@@ -5,7 +5,7 @@ PALETA DE CORES: Paleta Pastel Elegante
 - Cor Secundária: Azul Claro (#72B8F2)
 - Cor de Destaque: Dourado Suave (#E6A96B)
 - Cor de Fundo: Branco Neve (#FFFFFF)
-- Cor de Texto: Cinza Escuro (#333333)
+- Cor de Texto: Cinza Escuro (#4A3F35)
 */
 
 *{
@@ -17,7 +17,7 @@ PALETA DE CORES: Paleta Pastel Elegante
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #ffffff;
+    background-color: #fffdfb;
     font-family: 'Poppins', sans-serif;
     height: 100%;
 }
@@ -34,7 +34,7 @@ body {
 }
 
 .img-logo > img{
-    width: 3vw;
+    width: 4vw;
     margin-top: 2vw;
 }
 
@@ -50,14 +50,15 @@ body {
 }
 
 .title-header{
-    font-size: 4.5vw;
+    font-size: 3.8vw;
     color: #f279ba;
-    margin-bottom: 0vw;
+    margin: 1.5vw 0 1vw 0;
+    line-height: 4.7vw;
 }
 
 .subtitle-header{
     font-size: 1.8vw;
-    color: #333333;
+    color: #4A3F35;
 }
 
 
@@ -131,7 +132,7 @@ body {
     font-size: 1.2vw;
     font-weight: 600;
     margin-bottom: 0.1vw;
-    color: #333333;
+    color: #4A3F35;
 }
 
 .form-group input,
@@ -144,7 +145,7 @@ body {
     font-family: 'Poppins', sans-serif;
     resize: none; /* Impedindo o redimensionamento */
     background-color: white;
-    color: #333333;
+    color: #4A3F35;
 }
 
 .form-group input::placeholder {
@@ -191,8 +192,17 @@ body {
     font-size: 1.8vw;
 }
 
+.alert-msg{
+    margin-top: 0.3vw;
+    letter-spacing: 0.05vw;
+    font-weight: bold;
+    font-size: 1vw;
+    color: #e94141;
+    text-align: center;
+}
+
 .selected-files {
-    margin-top: 10px;
+    margin-top: 0.7vw;
 }
 
 .file-preview {
@@ -283,7 +293,7 @@ body {
     font-size: 1.3vw;
     font-weight: 600;
     margin-bottom: 0.5vw;
-    color: #333333;
+    color: #4A3F35;
     text-align: center;
 }
 
