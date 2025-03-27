@@ -142,7 +142,8 @@ body {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+select {
     width: 100%;
     padding: 0.5vw 0.8vw;
     border: 0.1vw solid #9e9e9e;
@@ -240,6 +241,24 @@ body {
     color: #888;
     pointer-events: none;
 }
+
+.form-group-music{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+}
+  
+.custom-audio-player{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-icon{
+    width: 2.8vw;
+    cursor: pointer;
+} 
 
 .msg-plan-1 > h3{
     text-align: center;

@@ -4,13 +4,50 @@ import { useState, useRef } from "react";
 import { FaCamera } from "react-icons/fa"; 
 
 const HomePage = () => {
+
+  // UseState
   const [selectedPlan, setSelectedPlan] = useState(2);
   const [mensagem, setMensagem] = useState("");
   const [files, setFiles] = useState([]);
+  const [musicaSelecionada, setMusicaSelecionada] = useState("");
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  // UseRef
   const alertMsg = useRef(null);
+  const audioRef = useRef(null);
+  
+  const handlePlayPause = () => {
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.play();
+      setIsPlaying(true);
+    } 
+    else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleMusicaChange = (e) => {
+    const nomeMusica = e.target.value;
+
+    if (nomeMusica === "Sem música") {
+      setMusicaSelecionada(""); // para não tocar nada
+      setIsPlaying(false);
+    } 
+    else {
+      setMusicaSelecionada(nomeMusica);
+      setIsPlaying(true);
+    }
+  };
 
   const planChange = (e) => {
     setFiles([]);
+    setIsPlaying(false);
+    setMusicaSelecionada("");
     if (alertMsg.current) {
       alertMsg.current.innerHTML = '';
     }
@@ -130,8 +167,46 @@ const HomePage = () => {
                   </section>
 
                   <section className="form-group">
-                    <label htmlFor="musica">Escolha uma Música (opcional):</label>
-                    <input type="file" id="musica" name="musica" accept="audio/*" />
+                      <label htmlFor="musicaSelecionada">Escolha uma música (opcional):</label>
+                    <section className="form-group-music">
+                      <select
+                        id="musicaSelecionada"
+                        name="musicaSelecionada"
+                        className="select-musica"
+                        onChange={handleMusicaChange}
+                      >
+                        <option value="Sem música">Sem música</option>
+                        <option value="A_Verdadeira_Pascoa_CRISTO_JA_RESSUSCITOU_ALELUIA">A Verdadeira Páscoa</option>
+                        <option value="Christ_the_Lord_Is_Risen_Today">Christ the Lord Is Risen Today</option>
+                        <option value="Coelhinho_da_Pascoa">Coelhinho da Páscoa - Instrumental</option>
+                        <option value="Cristo_Ressuscitou_Aleluia">Cristo Ressuscitou Aleluia</option>
+                        <option value="Golpel_Instrumental_1">Gospel Instrumental - 1</option>
+                        <option value="Instrumental_Alegre_1">Instrumental Alegre - 1</option>
+                        <option value="Instrumental_Alegre_2">Instrumental Alegre - 2</option>
+                        <option value="Instrumental_Alegre_3">Instrumental Alegre - 3</option>
+                        <option value="Instrumental_Alegre_4">Instrumental Alegre - 4</option>
+                        <option value="Instrumental_Alegre_5">Instrumental Alegre - 5</option>
+                        <option value="JESUS_O_CORDEIRO">Jesus o Cordeiro</option>
+                        <option value="Musical_Pascoal_1">Músical Pascoal - 1</option>
+                        <option value="Musical_Pascoal_2">Músical Pascoal - 2</option>
+                        <option value="Musical_Pascoal_3">Músical Pascoal - 3</option>
+                        <option value="Pascoa_do_Senhor">Páscoa do Senhor</option>
+                        <option value="PASCOA_E_ALEGRIA">Páscoa é Alegria</option>
+                      </select>
+
+                      {/* Reproduz a música selecionada automaticamente */}
+                      {musicaSelecionada !== "" && musicaSelecionada !== "Sem música" && (
+                        <section className="custom-audio-player">
+                          <audio ref={audioRef} src={`/music/${musicaSelecionada}.mp3`} autoPlay/>
+                          <img
+                            onClick={handlePlayPause}
+                            src={isPlaying ? "/image/play-sound.png" : "/image/no-sound.png"}
+                            alt={isPlaying ? "Tocar" : "Pausar"}
+                            className="btn-icon"
+                          />
+                        </section>
+                      )}
+                    </section>
                   </section>
                 </>
               )}
@@ -175,47 +250,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-{/*FONTES PARA TESTE
-
-<div className="font-box">
-  <h3>Lora</h3>
-  <p style={{ fontFamily: 'Lora, serif' }}>Exemplo de texto com a fonte Lora.</p>
-</div>
-<div className="font-box">
-  <h3>Raleway</h3>
-  <p style={{ fontFamily: 'Raleway, sans-serif' }}>Exemplo de texto com a fonte Raleway.</p>
-</div>
-<div className="font-box">
-  <h3>Merriweather</h3>
-  <p style={{ fontFamily: 'Merriweather, serif' }}>Exemplo de texto com a fonte Merriweather.</p>
-</div>
-<div className="font-box">
-  <h3>Poppins</h3>
-  <p style={{ fontFamily: 'Poppins, sans-serif' }}>Exemplo de texto com a fonte Poppins.</p>
-</div>
-<div className="font-box">
-  <h3>Quicksand</h3>
-  <p style={{ fontFamily: 'Quicksand, sans-serif' }}>Exemplo de texto com a fonte Quicksand.</p>
-</div>
-<div className="font-box">
-  <h3>Playfair Display</h3>
-  <p style={{ fontFamily: 'Playfair Display, serif' }}>Exemplo de texto com a fonte Playfair Display.</p>
-</div>
-<div className="font-box">
-  <h3>Roboto</h3>
-  <p style={{ fontFamily: 'Roboto, sans-serif' }}>Exemplo de texto com a fonte Roboto.</p>
-</div>
-<div className="font-box">
-  <h3>Montserrat</h3>
-  <p style={{ fontFamily: 'Montserrat, sans-serif' }}>Exemplo de texto com a fonte Montserrat.</p>
-</div>
-<div className="font-box">
-  <h3>Nunito</h3>
-  <p style={{ fontFamily: 'Nunito, sans-serif' }}>Exemplo de texto com a fonte Nunito.</p>
-</div>
-<div className="font-box">
-  <h3>Josefin Sans</h3>
-  <p style={{ fontFamily: 'Josefin Sans, sans-serif' }}>Exemplo de texto com a fonte Josefin Sans.</p>
-</*/}

@@ -1,0 +1,16 @@
+COISAS QUE TEM QUE FAZER:
+
+- Backend
+- Banco de dados
+- Página final do site (Apresentação da homenagem)
+- Responsividade
+- Geração do QRcode
+- Pagamento
+- Hospedágem do site
+- Envio do email
+
+
+
+DETALHES PARA RESOLVER:
+
+- Trocar o gif de exemplo 
