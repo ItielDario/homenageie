@@ -2,20 +2,26 @@
 
 import { useState, useRef } from "react";
 import { FaCamera } from "react-icons/fa"; 
+import httpClient from "./utils/httpClient.js";
 
 const HomePage = () => {
 
   // UseState
-  const [selectedPlan, setSelectedPlan] = useState(2);
+  const [planoSelecionado, setplanoSelecionado] = useState(2);
   const [mensagem, setMensagem] = useState("");
-  const [files, setFiles] = useState([]);
+  const [imagens, setImagens] = useState([]);
   const [musicaSelecionada, setMusicaSelecionada] = useState("");
   const [isPlaying, setIsPlaying] = useState(true);
 
   // UseRef
   const alertMsg = useRef(null);
   const audioRef = useRef(null);
+  const nomeRef = useRef("");
+  const mensagemRef = useRef("");
+  const emailRef = useRef("");
+
   
+  // Funções Gerais
   const handlePlayPause = () => {
     const audio = audioRef.current;
 
@@ -45,7 +51,7 @@ const HomePage = () => {
   };
 
   const planChange = (e) => {
-    setFiles([]);
+    setImagens([]);
     setIsPlaying(false);
     setMusicaSelecionada("");
     if (alertMsg.current) {
@@ -63,19 +69,53 @@ const HomePage = () => {
   const handleFileChange = (e) => {
     const selectedFiles = e.target.files;
 
-    if (selectedFiles.length <= (selectedPlan === 1 ? 3 : 5)) {
+    if (selectedFiles.length <= (planoSelecionado === 1 ? 3 : 5)) {
       if (alertMsg.current) {
         alertMsg.current.innerHTML = '';
       }
-      setFiles(Array.from(selectedFiles));
+      setImagens(Array.from(selectedFiles));
     } 
     else {
-      setFiles([]);
+      setImagens([]);
       if (alertMsg.current) {
-        alertMsg.current.innerHTML = `Você pode escolher até ${selectedPlan === 1 ? 3 : 5} fotos.`;
+        alertMsg.current.innerHTML = `Você pode escolher até ${planoSelecionado === 1 ? 3 : 5} fotos.`;
       }
     }
   };
+
+
+  // Conexão com o backend
+  const verificarPlano = () => {
+    if(planoSelecionado === 0){ // Plano Gratuito
+      registrarDados();
+    }
+    else{ // Plano Pago
+      registrarDados();
+    }
+  }
+
+  const registrarDados = () => {
+    
+    const dados = {
+      remPlano: planoSelecionado,
+      desNome: nomeRef.current.value,
+      remMensagem: mensagemRef.current?.value || "",
+      remMusica: musicaSelecionada || "",
+      imagens: imagens || "",
+      remEmail: emailRef.current.value,
+    };
+    
+    console.log(dados)
+
+    httpClient.post("/dados/cadastrar", dados)
+    .then(r => {
+      status = r.status;
+      return r.json();
+    })
+    .then(r => {
+      
+    });
+  }
 
   return (
     <section className="page-container">
@@ -92,15 +132,15 @@ const HomePage = () => {
         <section className="container-main-header">
           <section className="form-container">
             <article className="box-plans">
-              <p className={`plans-0 ${selectedPlan === 0 ? "plans-selected" : ""}`} onClick={() => { setSelectedPlan(0); planChange() }}>
+              <p className={`plans-0 ${planoSelecionado === 0 ? "plans-selected" : ""}`} onClick={() => { setplanoSelecionado(0); planChange() }}>
                 Gratuito
               </p>
 
-              <p className={`plans-1 ${selectedPlan === 1 ? "plans-selected" : ""}`} onClick={() => { setSelectedPlan(1); planChange() }}>
+              <p className={`plans-1 ${planoSelecionado === 1 ? "plans-selected" : ""}`} onClick={() => { setplanoSelecionado(1); planChange() }}>
                 3 fotos - R$ 4,90
               </p>
 
-              <p className={`plans-2 ${selectedPlan === 2 ? "plans-selected" : ""}`} onClick={() => {setSelectedPlan(2); planChange()}}>
+              <p className={`plans-2 ${planoSelecionado === 2 ? "plans-selected" : ""}`} onClick={() => {setplanoSelecionado(2); planChange()}}>
                 5 fotos, 1 mensagem e 1 música - R$ 9,90
               </p>
             </article>
@@ -108,10 +148,10 @@ const HomePage = () => {
             <form className="form">
               <section className="form-group">
                 <label htmlFor="nome">Nome da pessoa homenageada:</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome da pessoa homenageada" required />
+                <input type="text" ref={nomeRef} id="nome" name="nome" placeholder="Digite o nome da pessoa homenageada" required />
               </section>  
 
-              {(selectedPlan === 1 || selectedPlan === 2) && (
+              {(planoSelecionado === 1 || planoSelecionado === 2) && (
                 <section className="form-group">
                   <label htmlFor="foto">Selecione as fotos:</label>
                   <section className="custom-file-upload">
@@ -125,16 +165,16 @@ const HomePage = () => {
                     />
                     <span className="file-placeholder">
                       <FaCamera className="FaCamera" />
-                      {`${selectedPlan === 1 ? "Clique aqui e escolha até 3 fotos" : "Clique aqui e escolha até 5 fotos"}`}
+                      {`${planoSelecionado === 1 ? "Clique aqui e escolha até 3 fotos" : "Clique aqui e escolha até 5 fotos"}`}
                     </span>
                   </section>
 
                   <aside className="alert-msg" ref={alertMsg}></aside>
 
                   <section className="selected-files">
-                    {files.length > 0 && (
+                    {imagens.length > 0 && (
                       <section className="file-preview">
-                        {files.map((file, index) => (
+                        {imagens.map((file, index) => (
                           <img
                             key={index}
                             src={URL.createObjectURL(file)}
@@ -148,7 +188,7 @@ const HomePage = () => {
                 </section>
               )}
 
-              {selectedPlan === 2 && (
+              {planoSelecionado === 2 && (
                 <>
                   <section className="form-group">
                     <label htmlFor="mensagem">Mensagem Personalizada:</label>
@@ -161,6 +201,7 @@ const HomePage = () => {
                         required
                         value={mensagem}
                         onChange={handleMensagemChange}
+                        ref={mensagemRef}
                       />
                       <span className="char-count">{mensagem.length}/200</span>
                     </section>
@@ -213,23 +254,22 @@ const HomePage = () => {
 
               <section className="form-group">
                 <label htmlFor="email">Seu email:</label>
-                <input type="email" id="email" name="email" placeholder="Seu email para receber o QRcode" required />
+                <input type="email" ref={emailRef} id="email" name="email" placeholder="Seu email para receber o QRcode" required />
               </section> 
 
-              {selectedPlan === 1 && (
+              {planoSelecionado === 1 && (
                 <aside className={`msg-plan-1`}>
                   <h3>*Personalize sua homenagem com uma mensagem carinhosa e uma música. Troque agora de plano e torne o momento ainda mais especial.</h3>
                 </aside>
               )}
 
-              {selectedPlan === 0 && (
+              {planoSelecionado === 0 && (
                 <aside className={`msg-plan-1`}>
                   <h3>*Personalize sua homenagem com fotos, uma mensagem carinhosa e uma música. Troque agora de plano e torne o momento ainda mais especial.</h3>
                 </aside>
               )}
   
-              <button className="btn"> CRIAR HOMENAGEM
-              </button>
+              <button type="button" className="btn" onClick={verificarPlano}> CRIAR HOMENAGEM</button>
             </form>
           </section>
 

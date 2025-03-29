@@ -13,4 +13,6 @@ COISAS QUE TEM QUE FAZER:
 
 DETALHES PARA RESOLVER:
 
+- Fazer todas as validações no formulario (nome não pode mais de 50 caracteres, se está tudo preenchido, etc)
 - Trocar o gif de exemplo 
+- Como colocar emoji na mensagem

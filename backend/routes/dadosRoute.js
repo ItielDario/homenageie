@@ -5,6 +5,6 @@ const router = express.Router();
 const ctrl = new dadosController();
 
 // Cadastra todas as informações
-router.get('/cadastrar', (req, res) => { ctrl.regisrarDados(req, res) })
+router.post('/cadastrar', (req, res) => { ctrl.regisrarDados(req, res) })
 
 export default router;
