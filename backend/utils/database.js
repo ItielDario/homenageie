@@ -7,9 +7,9 @@ export default class Database {
 
     constructor() {
         this.#conexao = mysql.createPool({
-            host: '',
-            database: '',
-            user: '',
+            host: 'localhost',
+            database: 'homenagem_db',
+            user: 'root',
             password: '',
         });
     }
